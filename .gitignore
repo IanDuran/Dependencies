@@ -1,5 +1,3 @@
-
-.gitignore
 .idea/
 *.iml
 src/test/
