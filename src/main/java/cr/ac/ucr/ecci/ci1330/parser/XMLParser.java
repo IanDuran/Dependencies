@@ -1,4 +1,22 @@
 package cr.ac.ucr.ecci.ci1330.parser;
 
+import cr.ac.ucr.ecci.ci1330.bean.Bean;
+
+import java.util.Map;
+
 public class XMLParser extends AbstractParser {
+
+    public XMLParser(String path){
+        super(path);
+    }
+
+    @Override
+    public void parseFile(Map<String, Bean> beanMap) {
+
+    }
+
+    @Override
+    public void createBean(Map<String, Bean> beanMap) {
+
+    }
 }

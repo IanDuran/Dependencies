@@ -2,6 +2,7 @@ package cr.ac.ucr.ecci.ci1330.container;
 
 import cr.ac.ucr.ecci.ci1330.bean.Bean;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractContainer implements Container{
@@ -10,10 +11,13 @@ public abstract class AbstractContainer implements Container{
     protected String initMethod;
     protected String destroyMethod;
 
-    public AbstractContainer(String path){
-
+    public AbstractContainer(){
+        this.beansById = new HashMap<String, Bean>();
+        this.beansByType = new HashMap<String, Bean>();
     }
 
     protected abstract void startInjection();
     protected abstract void insertDependencies();
+
+
 }

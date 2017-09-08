@@ -6,7 +6,8 @@ public class XMLContainer extends AbstractContainer {
     private XMLParser parser;
 
     public XMLContainer(String path){
-        super(path);
+        super();
+        this.parser = new XMLParser(path);
     }
 
     public Object getBeanById(String id) {

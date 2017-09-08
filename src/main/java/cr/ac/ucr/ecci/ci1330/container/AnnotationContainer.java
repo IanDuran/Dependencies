@@ -7,7 +7,8 @@ public class AnnotationContainer extends AbstractContainer{
     private AnnotationParser parser;
 
     public AnnotationContainer(String path){
-        super(path);
+        super();
+        this.parser = new AnnotationParser(path);
     }
 
     public Object getBeanById(String id) {
