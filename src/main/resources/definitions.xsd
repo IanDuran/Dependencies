@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://www.w3schools.com"
+           xmlns="https://www.w3schools.com"
+           elementFormDefault="qualified">
+
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="annotation-config" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="init-method" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="destroy-method" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="beans" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="annotation-config">
+        <xs:complexType>
+            <xs:attribute name="package" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="init-method">
+        <xs:complexType>
+            <xs:attribute name="method" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="destroy-method">
+        <xs:complexType>
+            <xs:attribute name="method" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="dependencies">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dependency" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="dependency">
+        <xs:complexType>
+            <xs:attribute name="attributeName" type="xs:string"/>
+            <xs:attribute name="beanId" type="xs:string"/>
+            <xs:attribute name="autowired" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="attributeName" type="xs:string"/>
+    <xs:element name="beanID" type="xs:string"/>
+    <xs:element name="autowired" type="xs:string"/>
+
+    <xs:element name="beans">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="bean" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="bean">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dependencies"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="class" type="xs:string" use="required"/>
+            <xs:attribute name="scope" type="xs:string"/>
+            <xs:attribute name="init-method" type="xs:string"/>
+            <xs:attribute name="destroy-method" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+
+</xs:schema>
