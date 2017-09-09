@@ -11,9 +11,15 @@ public class AnnotationParser extends AbstractParser {
         super(path);
     }
 
+
+
     @Override
     public void parseFile(Map<String, Bean> beanMap) {
-
+        try{
+            Element element = super.configurationFile.getRootElement().getFirstChildElement("annotation-config");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

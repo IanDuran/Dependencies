@@ -3,6 +3,7 @@ package cr.ac.ucr.ecci.ci1330.container;
 import cr.ac.ucr.ecci.ci1330.parser.XMLParser;
 
 public class XMLContainer extends AbstractContainer {
+
     private XMLParser parser;
 
     public XMLContainer(String path){

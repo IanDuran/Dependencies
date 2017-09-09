@@ -1,6 +1,6 @@
 <root xmlns="https://www.w3schools.com">
     <!-- los atributos los generé con la herramienta online que es un amor :3-->
-    <annotation-config package="str1234" />
+    <annotation-config package="str1234"/>
     <init-method method="str1234" />
     <destroy-method method="str1234" />
     <beans>

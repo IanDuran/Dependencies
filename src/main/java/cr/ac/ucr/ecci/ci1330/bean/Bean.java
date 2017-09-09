@@ -1,7 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.bean;
 
 import cr.ac.ucr.ecci.ci1330.enums.Autowired;
-import cr.ac.ucr.ecci.ci1330.enums.Injection;
 import cr.ac.ucr.ecci.ci1330.enums.Scope;
 
 import java.util.LinkedList;
@@ -15,6 +14,7 @@ public class Bean {
     private String className;
     private String initMethod;
     private String destroyMethod;
+    private Object instance;
     private List<Dependency> dependencies;
 
     public Bean(){
@@ -46,11 +46,19 @@ public class Bean {
     }
 
     public Autowired getAutowired() {
-        return autowired;
+        return this.autowired;
     }
 
     public void setAutowired(Autowired autowired) {
         this.autowired = autowired;
+    }
+
+    public Object getInstance() {
+        return this.instance;
+    }
+
+    public void setInstance(Object instance) {
+        this.instance = instance;
     }
 
     public List<Dependency> getDependencies() {
