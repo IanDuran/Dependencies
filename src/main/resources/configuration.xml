@@ -4,10 +4,15 @@
     <init-method method="str1234" />
     <destroy-method method="str1234" />
     <beans>
-        <bean id="str1234" class="str1234" scope="str1234" init-method="str1234" destroy-method="str1234">
+        <bean id="1" class="Teacher" scope="SINGLETON" autowiring="NAME" injection="CONSTRUCTOR" init-method="ini1" destroy-method="des1">
             <dependencies>
-                <dependency attributeName="str1234" beanId="str1234" autowired="str1234" />
-                <dependency attributeName="str1234" beanId="str1234" autowired="str1234" />
+                <dependency attributeName="Assistant" beanId="d11" autowired="TYPE" />
+                <dependency attributeName="Student" beanId="d12" autowired="NAME" />
+            </dependencies>
+        </bean>
+        <bean id="2" class="Assistant" scope="PROTOTYPE" autowiring="TYPE" injection="SETTER" init-method="ini2" destroy-method="des2">
+            <dependencies>
+                <dependency attributeName="Student" beanId="d22" autowired="NAME" />
             </dependencies>
         </bean>
     </beans>
