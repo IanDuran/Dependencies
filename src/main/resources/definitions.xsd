@@ -12,7 +12,6 @@
                 <xs:element ref="destroy-method" minOccurs="0"/>
                 <xs:element ref="beans" minOccurs="0"/>
             </xs:sequence>
-
         </xs:complexType>
     </xs:element>
 

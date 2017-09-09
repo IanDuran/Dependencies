@@ -1,6 +1,10 @@
 package cr.ac.ucr.ecci.ci1330.container;
 
+import cr.ac.ucr.ecci.ci1330.bean.Bean;
+import cr.ac.ucr.ecci.ci1330.bean.Dependency;
 import cr.ac.ucr.ecci.ci1330.parser.AnnotationParser;
+
+import java.util.List;
 
 public class AnnotationContainer extends AbstractContainer{
 
@@ -23,9 +27,13 @@ public class AnnotationContainer extends AbstractContainer{
     protected void startInjection() {
 
     }
+    @Override
+    protected void insertDependencies(Bean bean) {
+
+    }
 
     @Override
-    protected void insertDependencies() {
-
+    protected Object createBean(Bean bean) {
+        return null;
     }
 }
