@@ -1,6 +1,7 @@
 package cr.ac.ucr.ecci.ci1330.bean;
 
 import cr.ac.ucr.ecci.ci1330.enums.Autowired;
+import cr.ac.ucr.ecci.ci1330.enums.Injection;
 import cr.ac.ucr.ecci.ci1330.enums.Scope;
 
 import java.util.LinkedList;
