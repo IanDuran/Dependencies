@@ -19,5 +19,4 @@ public abstract class AbstractContainer implements Container{
     protected abstract void startInjection();
     protected abstract void insertDependencies();
 
-
 }

@@ -11,6 +11,7 @@ public class Bean {
     private Scope scope;
     private Autowired autowired;
     private String className;
+    private Object instance;
     private List<Dependency> dependencies;
 
     public Bean(){
@@ -42,11 +43,19 @@ public class Bean {
     }
 
     public Autowired getAutowired() {
-        return autowired;
+        return this.autowired;
     }
 
     public void setAutowired(Autowired autowired) {
         this.autowired = autowired;
+    }
+
+    public Object getInstance() {
+        return this.instance;
+    }
+
+    public void setInstance(Object instance) {
+        this.instance = instance;
     }
 
     public List<Dependency> getDependencies() {
