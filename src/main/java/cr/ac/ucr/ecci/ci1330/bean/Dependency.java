@@ -17,7 +17,7 @@ public class Dependency {
     }
 
     public String getBeanId() {
-        return beanId;
+        return this.beanId;
     }
 
     public void setBeanId(String beanId) {
@@ -25,7 +25,7 @@ public class Dependency {
     }
 
     public Autowired getAutowired() {
-        return autowired;
+        return this.autowired;
     }
 
     public void setAutowired(Autowired autowired) {
@@ -33,7 +33,7 @@ public class Dependency {
     }
 
     public String getClassName() {
-        return className;
+        return this.className;
     }
 
     public void setClassName(String className) {

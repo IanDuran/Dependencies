@@ -23,6 +23,19 @@ public abstract class AbstractParser {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Parse XML file to fill the bean maps.
+     * @param beanMap the bean map.
+     */
     public abstract void parseFile(Map<String, Bean> beanMap);
+
+    /**
+     * Create a bean from XML element.
+     * @param beanMap the bean map that will contain it.
+     * @param bean the bean element from XML.
+     */
     public abstract void createBean(Map<String, Bean> beanMap, Element bean);
+
+
 }

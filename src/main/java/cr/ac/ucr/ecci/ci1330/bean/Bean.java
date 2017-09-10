@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Bean {
     private String id;
-    private Scope scope;
-    private Autowired autowired;
-    private Injection injection;
     private String className;
     private String initMethod;
     private String destroyMethod;
+    private Scope scope;
+    private Autowired autowired;
+    private Injection injection;
     private Object instance;
     private List<Dependency> dependencies;
 
@@ -75,7 +75,7 @@ public class Bean {
     }
 
     public String getInitMethod() {
-        return initMethod;
+        return this.initMethod;
     }
 
     public void setInitMethod(String initMethod) {
@@ -91,7 +91,7 @@ public class Bean {
     }
 
     public Injection getInjection() {
-        return injection;
+        return this.injection;
     }
 
     public void setInjection(Injection injection) {

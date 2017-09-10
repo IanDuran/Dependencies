@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class XMLParser extends AbstractParser {
 
+    private String initMethod;
+    private String destroyMethod;
+
     public XMLParser(String path){
         super(path);
     }
@@ -23,10 +26,19 @@ public class XMLParser extends AbstractParser {
         Elements rootChildren = this.configurationFile.getRootElement().getChildElements();
         int rootChildNum = rootChildren.size();
         int i = 0;
-        while((i<rootChildNum)&&(!rootChildren.get(i).getLocalName().equals("beans"))){
+        boolean continuee = true;
+        Elements beans = null;
+        while((i<rootChildNum)&&(continuee)){
+            if(rootChildren.get(i).getLocalName().equals("init-method")){
+                this.initMethod = rootChildren.get(i).getAttributeValue("method");
+            } else if(rootChildren.get(i).getLocalName().equals("destroy-method")){
+                this.destroyMethod = rootChildren.get(i).getAttributeValue("method");
+            } else if(rootChildren.get(i).getLocalName().equals("beans")){
+                continuee = false;
+                beans = rootChildren.get(i).getChildElements();
+            }
             i++;
         }
-        Elements beans = rootChildren.get(i).getChildElements();
         Element bean;
         int childNum = beans.size();
         for(int j=0;j<childNum;j++){
@@ -49,6 +61,11 @@ public class XMLParser extends AbstractParser {
         beanMap.put(bean.getAttributeValue("id"),newBean);
     }
 
+    /**
+     * Iterate through all dependencies from XML and add them to dependecies list of bean.
+     * @param bean the bean element from XML.
+     * @param newBean the bean being created.
+     */
     public void setAllDependencies(Element bean, Bean newBean){
         Elements dependencies = bean.getChildElements().get(0).getChildElements();
         Element dependency;
@@ -59,12 +76,33 @@ public class XMLParser extends AbstractParser {
         }
     }
 
+    /**
+     * Set one dependency.
+     * @param dependency the dependency element from XML.
+     * @return the new dependency.
+     */
     public Dependency setDependency(Element dependency){
         Dependency newDependency = new Dependency();
         newDependency.setAttributeName(dependency.getAttributeValue("attributeName"));
         newDependency.setBeanId(dependency.getAttributeValue("beanId"));
         newDependency.setAutowired(Autowired.valueOf(dependency.getAttributeValue("autowired")));
         return newDependency;
+    }
+
+    /**
+     * Get the init method name if specified on XML.
+     * @return the init method name.
+     */
+    public String getInitMethod() {
+        return initMethod;
+    }
+
+    /**
+     * Get the destroy method name if specified on XML.
+     * @return the destroy method name.
+     */
+    public String getDestroyMethod() {
+        return destroyMethod;
     }
 
     public static void main(String[] args) {
@@ -83,5 +121,6 @@ public class XMLParser extends AbstractParser {
             }
             it.remove(); // avoids a ConcurrentModificationException
         }
+        System.out.println(p.getInitMethod()+p.getDestroyMethod());
     }
 }
