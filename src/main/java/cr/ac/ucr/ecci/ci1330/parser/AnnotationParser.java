@@ -15,7 +15,7 @@ public class AnnotationParser extends AbstractParser {
     }
 
     @Override
-    public void parseFile(Map<String, Bean> beanMap) {
+    public void parseFile(Map<String, Bean> idBeanMap,Map<String,Bean> classBeanMap) {
         try{
             Element rootElement = super.configurationFile.getRootElement();
             Elements elements = rootElement.getChildElements();
@@ -39,12 +39,12 @@ public class AnnotationParser extends AbstractParser {
     }
 
     @Override
-    public void createBean(Map<String, Bean> beanMap,Element bean) {
+    public void createBean(Map<String, Bean> idBeanMap,Map<String,Bean> classBeanMap,Element bean) {
 
     }
 
     public static void main(String... args){
         AnnotationParser an = new AnnotationParser("src\\main\\resources\\configuration.xml");
-        an.parseFile(new HashMap<String, Bean>());
+        an.parseFile(new HashMap<String, Bean>(),null);
     }
 }

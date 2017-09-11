@@ -95,7 +95,7 @@ public class XMLContainer extends AbstractContainer {
             }
         }
     }
-    
+
     private void insertDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency){
         Bean newBean = beanMap.get(key);
         if (newBean != null) {

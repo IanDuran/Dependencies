@@ -26,16 +26,18 @@ public abstract class AbstractParser {
 
     /**
      * Parse XML file to fill the bean maps.
-     * @param beanMap the bean map.
+     * @param idBeanMap the bean map with ids.
+     * @param classBeanMap the bean map with classes.
      */
-    public abstract void parseFile(Map<String, Bean> beanMap);
+    public abstract void parseFile(Map<String, Bean> idBeanMap,Map<String,Bean> classBeanMap);
 
     /**
      * Create a bean from XML element.
-     * @param beanMap the bean map that will contain it.
+     * @param idBeanMap the bean map that will contain beans by id.
+     * @param classBeanMap the bean map that will contain beans by class.
      * @param bean the bean element from XML.
      */
-    public abstract void createBean(Map<String, Bean> beanMap, Element bean);
+    public abstract void createBean(Map<String, Bean> idBeanMap,Map<String,Bean> classBeanMap, Element bean);
 
 
 }
