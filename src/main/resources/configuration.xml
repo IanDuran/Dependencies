@@ -4,16 +4,15 @@
     <init-method method="live" />
     <destroy-method method="die" />
     <beans>
-        <bean id="1" class="Teacher" scope="SINGLETON" autowiring="NAME" injection="CONSTRUCTOR" init-method="ini1" destroy-method="des1">
+        <bean id="1" class="cr.ac.ucr.ecci.ci1330.model.Teacher" scope="SINGLETON" autowiring="NAME" injection="SETTER" init-method="ini1" destroy-method="des1">
             <dependencies>
-                <dependency attributeName="Assistant" beanId="d11" autowired="TYPE" />
-                <dependency attributeName="Student" beanId="d12" autowired="NAME" />
+                <dependency attributeName="assistant" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Assistant" dependencyId="2" autowired="TYPE" />
+                <dependency attributeName="student" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="3" autowired="TYPE" />
             </dependencies>
         </bean>
-        <bean id="2" class="Assistant" scope="PROTOTYPE" autowiring="TYPE" injection="SETTER" init-method="ini2" destroy-method="des2">
-            <dependencies>
-                <dependency attributeName="Student" beanId="d22" autowired="NAME" />
-            </dependencies>
+        <bean id="2" class="cr.ac.ucr.ecci.ci1330.model.Assistant" scope="SINGLETON" autowiring="TYPE" injection="SETTER" init-method="ini2" destroy-method="des2">
+        </bean>
+        <bean id="3" class="cr.ac.ucr.ecci.ci1330.model.Student" scope="PROTOTYPE" autowiring="TYPE" injection="SETTER" init-method="ini2" destroy-method="des2">
         </bean>
     </beans>
 </root>

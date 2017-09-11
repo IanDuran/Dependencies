@@ -4,24 +4,17 @@ import cr.ac.ucr.ecci.ci1330.enums.Autowired;
 
 public class Dependency {
     private String attributeName;
-    private String beanId;
-    private String className;
+    private String dependencyId;
+    private String dependencyClassName;
     private Autowired autowired;
 
-    public String getAttributeName() {
-        return attributeName;
+
+    public String getDependencyId() {
+        return this.dependencyId;
     }
 
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public String getBeanId() {
-        return this.beanId;
-    }
-
-    public void setBeanId(String beanId) {
-        this.beanId = beanId;
+    public void setDependencyId(String dependencyId) {
+        this.dependencyId = dependencyId;
     }
 
     public Autowired getAutowired() {
@@ -32,11 +25,20 @@ public class Dependency {
         this.autowired = autowired;
     }
 
-    public String getClassName() {
-        return this.className;
+    public String getAttributeName() {
+        return this.attributeName;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
     }
+
+    public String getDependencyClassName() {
+        return this.dependencyClassName;
+    }
+
+    public void setDependencyClassName(String beanClassName) {
+        this.dependencyClassName = beanClassName;
+    }
+
 }

@@ -67,13 +67,15 @@ public class XMLParser extends AbstractParser {
      * @param bean the bean element from XML.
      * @param newBean the bean being created.
      */
-    public void setAllDependencies(Element bean, Bean newBean){
-        Elements dependencies = bean.getChildElements().get(0).getChildElements();
-        Element dependency;
-        int dependenciesNum = dependencies.size();
-        for(int i=0;i<dependenciesNum;i++){
-            dependency = dependencies.get(i);
-            newBean.getDependencies().add(this.setDependency(dependency));
+    private void setAllDependencies(Element bean, Bean newBean){
+        if(bean.getChildElements().size()>0) {
+            Elements dependencies = bean.getChildElements().get(0).getChildElements();
+            Element dependency;
+            int dependenciesNum = dependencies.size();
+            for (int i = 0; i < dependenciesNum; i++) {
+                dependency = dependencies.get(i);
+                newBean.getDependencies().add(this.setDependency(dependency));
+            }
         }
     }
 
@@ -82,10 +84,15 @@ public class XMLParser extends AbstractParser {
      * @param dependency the dependency element from XML.
      * @return the new dependency.
      */
-    public Dependency setDependency(Element dependency){
+    private Dependency setDependency(Element dependency){
         Dependency newDependency = new Dependency();
+        if(dependency.getAttributeValue("dependencyId") != null){
+            newDependency.setDependencyId(dependency.getAttributeValue("dependencyId"));
+        }
+        if(dependency.getAttributeValue("dependencyClassName") != null){
+            newDependency.setDependencyClassName(dependency.getAttributeValue("dependencyClassName"));
+        }
         newDependency.setAttributeName(dependency.getAttributeValue("attributeName"));
-        newDependency.setBeanId(dependency.getAttributeValue("beanId"));
         newDependency.setAutowired(Autowired.valueOf(dependency.getAttributeValue("autowired")));
         return newDependency;
     }
@@ -94,7 +101,7 @@ public class XMLParser extends AbstractParser {
      * Get the init method name if specified on XML.
      * @return the init method name.
      */
-    public String getInitMethod() {
+    private String getInitMethod() {
         return initMethod;
     }
 
@@ -102,7 +109,7 @@ public class XMLParser extends AbstractParser {
      * Get the destroy method name if specified on XML.
      * @return the destroy method name.
      */
-    public String getDestroyMethod() {
+    private String getDestroyMethod() {
         return destroyMethod;
     }
 
@@ -120,7 +127,7 @@ public class XMLParser extends AbstractParser {
                     + " " + b.getInitMethod()+ " " + b.getScope()+ " ");
             System.out.println("Dependencies:");
             for(Dependency dep:b.getDependencies()){
-                System.out.println(dep.getAttributeName()+" "+dep.getAutowired()+" "+dep.getBeanId());
+                System.out.println(dep.getAttributeName()+" "+dep.getAutowired()+" "+dep.getDependencyId());
             }
             it.remove(); // avoids a ConcurrentModificationException
         }
@@ -134,7 +141,7 @@ public class XMLParser extends AbstractParser {
                     + " " + b1.getInitMethod()+ " " + b1.getScope()+ " ");
             System.out.println("Dependencies:");
             for(Dependency dep:b1.getDependencies()){
-                System.out.println(dep.getAttributeName()+" "+dep.getAutowired()+" "+dep.getBeanId());
+                System.out.println(dep.getAttributeName()+" "+dep.getAutowired()+" "+dep.getDependencyId());
             }
             it2.remove(); // avoids a ConcurrentModificationException
         }

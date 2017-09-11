@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractContainer implements Container{
+
     protected Map<String, Bean> beansById;
     protected Map<String, Bean> beansByType;
     protected String initMethod;
@@ -19,4 +20,5 @@ public abstract class AbstractContainer implements Container{
     protected abstract void startInjection();
     protected abstract void insertDependencies(Bean bean);
     protected abstract Object createBean(Bean bean);
+    protected abstract void initializeBeans();
 }

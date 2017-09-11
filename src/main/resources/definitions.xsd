@@ -45,14 +45,16 @@
     <xs:element name="dependency">
         <xs:complexType>
             <xs:attribute name="attributeName" type="xs:string"/>
-            <xs:attribute name="beanId" type="xs:string"/>
+            <xs:attribute name="dependencyId" type="xs:string"/>
             <xs:attribute name="autowired" type="xs:string"/>
+            <xs:attribute name="dependencyClassName" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="attributeName" type="xs:string"/>
-    <xs:element name="beanID" type="xs:string"/>
+    <xs:element name="dependencyId" type="xs:string"/>
     <xs:element name="autowired" type="xs:string"/>
+    <xs:element name="dependencyClassName" type="xs:string"/>
 
     <xs:element name="beans">
         <xs:complexType>
@@ -65,7 +67,7 @@
     <xs:element name="bean">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="dependencies"/>
+                <xs:element ref="dependencies" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute name="id" type="xs:string" use="required"/>
             <xs:attribute name="class" type="xs:string" use="required"/>

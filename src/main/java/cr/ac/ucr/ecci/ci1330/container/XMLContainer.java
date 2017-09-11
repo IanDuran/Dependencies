@@ -3,6 +3,7 @@ package cr.ac.ucr.ecci.ci1330.container;
 import cr.ac.ucr.ecci.ci1330.bean.Bean;
 import cr.ac.ucr.ecci.ci1330.bean.Dependency;
 import cr.ac.ucr.ecci.ci1330.enums.Autowired;
+import cr.ac.ucr.ecci.ci1330.enums.Injection;
 import cr.ac.ucr.ecci.ci1330.enums.Scope;
 import cr.ac.ucr.ecci.ci1330.parser.XMLParser;
 
@@ -19,6 +20,7 @@ public class XMLContainer extends AbstractContainer {
     public XMLContainer(String path) {
         super();
         this.parser = new XMLParser(path);
+        this.parser.parseFile(this.beansById,this.beansByType);
     }
 
     /**
@@ -66,6 +68,7 @@ public class XMLContainer extends AbstractContainer {
     public Object createBean(Bean bean) {
         Class currClass;
         Object instance = null;
+
         try {
             currClass = Class.forName(bean.getClassName());
             Constructor constructor = currClass.getConstructor();
@@ -78,7 +81,8 @@ public class XMLContainer extends AbstractContainer {
     }
 
     @Override
-    public void startInjection() {
+    public void startInjection(){
+        this.initializeBeans();
         Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
         while(iterator.hasNext()){
             this.insertDependencies(iterator.next().getValue());
@@ -87,13 +91,13 @@ public class XMLContainer extends AbstractContainer {
 
     @Override
     public void insertDependencies(Bean bean) {
-        for (Dependency dependency : bean.getDependencies()) {
-            if (dependency.getAutowired().equals(Autowired.NAME)) {  //aca lo cambie, es autowired by name
-                this.insertDependencies(bean, super.beansById, dependency.getBeanId(), dependency);
-            } else {
-                this.insertDependencies(bean, super.beansByType, dependency.getClassName(), dependency);
+            for (Dependency dependency : bean.getDependencies()) {
+                if (dependency.getAutowired().equals(Autowired.NAME)) {  //aca lo cambie, es autowired by name
+                    this.insertDependencies(bean, super.beansById, dependency.getDependencyId(), dependency);
+                } else {
+                    this.insertDependencies(bean, super.beansByType, dependency.getDependencyClassName(), dependency);
+                }
             }
-        }
     }
 
     private void insertDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency){
@@ -122,12 +126,30 @@ public class XMLContainer extends AbstractContainer {
             for (int i = 0; i < methods.length; i++) {
                 if (methods[i].getName().toLowerCase().contains(childDependency.getAttributeName().toLowerCase()) //Dice que el metodo es un set
                         && methods[i].getParameterTypes().length == 1 //Revisa que solo tenga un parametro, por ser un setter
-                        && methods[i].getParameterTypes()[0].equals(Class.forName(childDependency.getClassName()))) {//Revisa que el parametro del setter sea del mismo tipo que la dependencia
+                        && methods[i].getParameterTypes()[0].equals(Class.forName(childDependency.getDependencyClassName()))) {//Revisa que el parametro del setter sea del mismo tipo que la dependencia
                     methods[i].invoke(parent.getInstance(), instance);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void initializeBeans() {
+        Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
+        while(iterator.hasNext()){
+            Bean currBean = iterator.next().getValue();
+            if(currBean.getScope().equals(Scope.SINGLETON) && currBean.getInjection().equals(Injection.SETTER)){
+                try {
+                    Class currClass = Class.forName(currBean.getClassName());
+                    Constructor constructor = currClass.getConstructor();
+                    Object instance = constructor.newInstance();
+                    currBean.setInstance(instance);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
