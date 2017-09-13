@@ -4,6 +4,7 @@ import cr.ac.ucr.ecci.ci1330.enums.Autowired;
 
 public class Dependency {
     private String attributeName;
+    private String methodName;
     private String dependencyId;
     private String dependencyClassName;
     private Autowired autowired;
@@ -41,4 +42,11 @@ public class Dependency {
         this.dependencyClassName = beanClassName;
     }
 
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
 }

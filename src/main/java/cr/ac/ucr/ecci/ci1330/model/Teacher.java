@@ -1,9 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.model;
 
-import cr.ac.ucr.ecci.ci1330.annotation.Id;
-import cr.ac.ucr.ecci.ci1330.annotation.PostConstruct;
-import cr.ac.ucr.ecci.ci1330.annotation.PreDestroy;
-import cr.ac.ucr.ecci.ci1330.annotation.Scope;
+import cr.ac.ucr.ecci.ci1330.annotation.*;
 
 @Id("teacher")
 @Scope("PROTOTYPE")
@@ -11,7 +8,8 @@ public class Teacher {
     private Assistant assistant;
     private Student student;
 
-    public Teacher(){
+    @Autowired
+    public Teacher(Student student, Assistant assistant){
 
     }
 

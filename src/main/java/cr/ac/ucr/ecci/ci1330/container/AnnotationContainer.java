@@ -2,9 +2,12 @@ package cr.ac.ucr.ecci.ci1330.container;
 
 import cr.ac.ucr.ecci.ci1330.annotation.*;
 import cr.ac.ucr.ecci.ci1330.bean.Bean;
+import cr.ac.ucr.ecci.ci1330.bean.Dependency;
 import cr.ac.ucr.ecci.ci1330.parser.AnnotationParser;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,6 +31,8 @@ public class AnnotationContainer extends AbstractContainer{
                 if(super.beansById.get(beanId.value()) == null) {
                     bean.setId(beanId.value());
                     super.beansById.put(beanId.value(), bean);
+                }else{
+                    throw new IllegalArgumentException();
                 }
             }
             //Lo mismo para el Scope
@@ -39,6 +44,7 @@ public class AnnotationContainer extends AbstractContainer{
 
             this.setMethodName(bean, beanClass, PostConstruct.class, true);
             this.setMethodName(bean, beanClass, PreDestroy.class, false);
+            this.setDependenciesInfo(bean, beanClass);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -75,9 +81,38 @@ public class AnnotationContainer extends AbstractContainer{
         }
         System.out.println();
     }
+
+    private void setDependenciesInfo(Bean bean, Class beanClass){
+        Constructor[] constructors = beanClass.getConstructors();
+        for(int i = 0; i < constructors.length; i++){
+            if(constructors[i].isAnnotationPresent(Autowired.class)){
+                Class[] paramClasses = constructors[i].getParameterTypes();
+                Dependency newDependency;
+                for(int j = 0; j < paramClasses.length; j++){
+                    newDependency = new Dependency();
+                    newDependency.setDependencyClassName(paramClasses[j].getName());
+                    bean.addDependency(newDependency);
+                }
+            }
+        }
+
+        Method[] methods = beanClass.getDeclaredMethods();
+        for (int i = 0; i < methods.length; i++) {
+            if(methods[i].isAnnotationPresent(Autowired.class) && methods[i].getParameterTypes().length == 1){
+                Class[] paramClasses = methods[i].getParameterTypes();
+                Dependency newDependency;
+                for(int j = 0; j < paramClasses.length; j++){
+                    newDependency = new Dependency();
+                    newDependency.setMethodName(methods[i].getName());
+                    newDependency.setDependencyClassName(paramClasses[j].getName());
+                    bean.addDependency(newDependency);
+                }
+            }
+        }
+    }
+
     @Override
     protected void insertDependencies(Bean bean) {
-
     }
 
     @Override
@@ -87,6 +122,5 @@ public class AnnotationContainer extends AbstractContainer{
 
     @Override
     protected void initializeBeans() {
-
     }
 }

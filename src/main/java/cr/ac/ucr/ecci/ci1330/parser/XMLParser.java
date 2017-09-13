@@ -52,13 +52,38 @@ public class XMLParser extends AbstractParser {
         Bean newBean = new Bean();
         newBean.setId(bean.getAttributeValue("id"));
         newBean.setClassName(bean.getAttributeValue("class"));
-        newBean.setScope(Scope.valueOf(bean.getAttributeValue("scope")));
-        newBean.setAutowired(Autowired.valueOf(bean.getAttributeValue("autowiring")));
-        newBean.setInjection(Injection.valueOf(bean.getAttributeValue("injection")));
-        newBean.setInitMethod(bean.getAttributeValue("init-method"));
-        newBean.setDestroyMethod(bean.getAttributeValue("destroy-method"));
+        if(bean.getAttributeValue("scope") != null) {
+            newBean.setScope(Scope.valueOf(bean.getAttributeValue("scope")));
+        }else{
+            newBean.setScope(Scope.SINGLETON);
+        }
+        if(bean.getAttributeValue("autowiring") != null) {
+            newBean.setAutowired(Autowired.valueOf(bean.getAttributeValue("autowiring")));
+        }else{
+            newBean.setAutowired(Autowired.TYPE);
+        }
+        if(bean.getAttributeValue("injection") != null){
+            newBean.setInjection(Injection.valueOf(bean.getAttributeValue("injection")));
+        }else{
+            newBean.setInjection(Injection.SETTER);
+        }
+        if(bean.getAttributeValue("init-method") != null) {
+            newBean.setInitMethod(bean.getAttributeValue("init-method"));
+        }else{
+            newBean.setInitMethod(this.initMethod);
+        }
+        if(bean.getAttributeValue("destroy-method") != null){
+            newBean.setDestroyMethod(bean.getAttributeValue("destroy-method"));
+        }else{
+            newBean.setDestroyMethod(this.destroyMethod);
+        }
+
         this.setAllDependencies(bean,newBean);
-        idBeanMap.put(bean.getAttributeValue("id"),newBean);
+        if(idBeanMap.get(bean.getAttributeValue("id")) == null) {
+            idBeanMap.put(bean.getAttributeValue("id"), newBean);
+        }else{
+            throw new IllegalArgumentException();
+        }
         classBeanMap.put(bean.getAttributeValue("class"),newBean);
     }
 
@@ -97,22 +122,6 @@ public class XMLParser extends AbstractParser {
         return newDependency;
     }
 
-    /**
-     * Get the init method name if specified on XML.
-     * @return the init method name.
-     */
-    private String getInitMethod() {
-        return initMethod;
-    }
-
-    /**
-     * Get the destroy method name if specified on XML.
-     * @return the destroy method name.
-     */
-    private String getDestroyMethod() {
-        return destroyMethod;
-    }
-
     public static void main(String[] args) {
         XMLParser p = new XMLParser("src\\main\\resources\\configuration.xml");
         Map<String,Bean> m = new HashMap<String, Bean>();
@@ -131,7 +140,6 @@ public class XMLParser extends AbstractParser {
             }
             it.remove(); // avoids a ConcurrentModificationException
         }
-        System.out.println(p.getInitMethod()+p.getDestroyMethod());
         Iterator it2 = m1.entrySet().iterator();
         while (it2.hasNext()) {
             Map.Entry pair = (Map.Entry)it2.next();
@@ -145,6 +153,5 @@ public class XMLParser extends AbstractParser {
             }
             it2.remove(); // avoids a ConcurrentModificationException
         }
-        System.out.println(p.getInitMethod()+p.getDestroyMethod());
     }
 }
