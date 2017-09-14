@@ -79,7 +79,6 @@ public class AnnotationContainer extends AbstractContainer{
             Map.Entry<String, Bean> currEntry = iterator.next();
             this.fillBeanInfo(currEntry.getValue());
         }
-        System.out.println();
     }
 
     private void setDependenciesInfo(Bean bean, Class beanClass){

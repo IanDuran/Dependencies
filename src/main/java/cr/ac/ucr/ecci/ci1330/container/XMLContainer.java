@@ -9,8 +9,7 @@ import cr.ac.ucr.ecci.ci1330.parser.XMLParser;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 
 public class XMLContainer extends AbstractContainer {
@@ -91,16 +90,20 @@ public class XMLContainer extends AbstractContainer {
 
     @Override
     public void insertDependencies(Bean bean) {
+        if(bean.getInjection().equals(Injection.SETTER)) {
             for (Dependency dependency : bean.getDependencies()) {
                 if (dependency.getAutowired().equals(Autowired.NAME)) {  //aca lo cambie, es autowired by name
-                    this.insertDependencies(bean, super.beansById, dependency.getDependencyId(), dependency);
+                    this.insertSetterDependencies(bean, super.beansById, dependency.getDependencyId(), dependency);
                 } else {
-                    this.insertDependencies(bean, super.beansByType, dependency.getDependencyClassName(), dependency);
+                    this.insertSetterDependencies(bean, super.beansByType, dependency.getDependencyClassName(), dependency);
                 }
             }
+        }else{
+            this.matchConstructorDependencies(bean);
+        }
     }
 
-    private void insertDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency){
+    private void insertSetterDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency){
         Bean newBean = beanMap.get(key);
         if (newBean != null) {
             if (newBean.getScope().equals(Scope.SINGLETON)) {
@@ -111,6 +114,65 @@ public class XMLContainer extends AbstractContainer {
                 this.setterInjection(bean, this.createBean(newBean), dependency);
             }
         }
+    }
+
+
+    private void matchConstructorDependencies(Bean bean){
+        try {
+            Class beanClass = Class.forName(bean.getClassName());
+            List<Dependency> dependencies = bean.getDependencies();
+            Constructor[] constructors = beanClass.getConstructors();
+            Class[] classes = null;
+            boolean isConstructorFound = false;
+            int correctConstructorIndex = -1;
+            for (int i = 0; i < constructors.length && !isConstructorFound; i++) {
+                classes = constructors[i].getParameterTypes();
+                if(classes.length == dependencies.size()){
+                    isConstructorFound = this.areArgumentsCorrect(classes, dependencies);
+                    if(isConstructorFound) {
+                        correctConstructorIndex = i;
+                    }
+                }
+            }
+            if(correctConstructorIndex != -1 && classes != null){
+                this.insertConstructorDependencies(bean, constructors[correctConstructorIndex], classes);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void insertConstructorDependencies(Bean bean, Constructor constructor, Class[] classes){
+        Object[] dependencies = new Object[classes.length];
+        for (int i = 0; i < dependencies.length; i++) {
+            dependencies[i] = super.beansByType.get(classes[i].getName().split(" ")[2]).getInstance();
+        }
+        try {
+            Object beanInstance = constructor.newInstance(dependencies);
+            bean.setInstance(beanInstance);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //Object instance = constructor.newInstance();
+
+    }
+
+    private boolean areArgumentsCorrect(Class[] classes, List<Dependency> dependencies){
+        boolean areCorrect = false;
+        Set<Integer> foundArguments = new TreeSet<Integer>();
+        int argumentNumber = 0;
+        for (int i = 0; i < classes.length; i++) {
+            for (int j = 0; j < dependencies.size(); j++) {
+                if(classes[i].toString().contains(dependencies.get(j).getDependencyClassName()) && !foundArguments.contains(j)){
+                    foundArguments.add(j);
+                    argumentNumber++;
+                }
+            }
+        }
+        if(argumentNumber == classes.length){
+            areCorrect = true;
+        }
+        return areCorrect;
     }
 
 
