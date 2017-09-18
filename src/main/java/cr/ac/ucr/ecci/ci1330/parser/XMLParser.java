@@ -8,8 +8,6 @@ import cr.ac.ucr.ecci.ci1330.enums.Scope;
 import nu.xom.Element;
 import nu.xom.Elements;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class XMLParser extends AbstractParser {
@@ -122,7 +120,7 @@ public class XMLParser extends AbstractParser {
         return newDependency;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         XMLParser p = new XMLParser("src\\main\\resources\\configuration.xml");
         Map<String,Bean> m = new HashMap<String, Bean>();
         Map<String,Bean> m1 = new HashMap<String, Bean>();
@@ -153,5 +151,5 @@ public class XMLParser extends AbstractParser {
             }
             it2.remove(); // avoids a ConcurrentModificationException
         }
-    }
+    }*/
 }

@@ -3,28 +3,29 @@ package cr.ac.ucr.ecci.ci1330.container;
 import cr.ac.ucr.ecci.ci1330.annotation.*;
 import cr.ac.ucr.ecci.ci1330.bean.Bean;
 import cr.ac.ucr.ecci.ci1330.bean.Dependency;
+import cr.ac.ucr.ecci.ci1330.enums.Injection;
 import cr.ac.ucr.ecci.ci1330.parser.AnnotationParser;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
-public class AnnotationContainer extends AbstractContainer{
+public class AnnotationContainer extends XMLContainer{
 
     private AnnotationParser parser;
 
     public AnnotationContainer(String path){
         super();
         this.parser = new AnnotationParser(path);
+        this.parser.parseFile(super.beansById, super.beansByType);
     }
 
     private void fillBeanInfo(Bean bean){
         try {
             Class beanClass = Class.forName(bean.getClassName());
-            String scopeValue = "SINGLETON";
+            cr.ac.ucr.ecci.ci1330.enums.Scope scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.SINGLETON; //aca no puede hacer de una vez la vara de tipo enum?
             //Revisa si hay Id, si lo hay, lo pone en el bean y lo agrega al mapa en caso de que no exista
             if(beanClass.isAnnotationPresent(Id.class)){
                 Id beanId = (Id) beanClass.getAnnotation(Id.class);
@@ -38,10 +39,10 @@ public class AnnotationContainer extends AbstractContainer{
             //Lo mismo para el Scope
             if(beanClass.isAnnotationPresent(Scope.class)){
                 Scope beanScope = (Scope) beanClass.getAnnotation(Scope.class);
-                scopeValue = beanScope.value().toUpperCase();
+                scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.valueOf(beanScope.value().toUpperCase());
             }
-            bean.setScope(cr.ac.ucr.ecci.ci1330.enums.Scope.valueOf(scopeValue));
-
+            bean.setScope(scopeValue);
+            bean.setInjection(Injection.SETTER);
             this.setMethodName(bean, beanClass, PostConstruct.class, true);
             this.setMethodName(bean, beanClass, PreDestroy.class, false);
             this.setDependenciesInfo(bean, beanClass);
@@ -63,28 +64,21 @@ public class AnnotationContainer extends AbstractContainer{
         }
     }
 
-    public Object getBeanById(String id) {
-        return null;
-    }
-
-    public Object getBeanByType(String className) {
-        return null;
-    }
-
     @Override
     public void startInjection() {
-        this.parser.parseFile(super.beansById, super.beansByType);
         Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String, Bean> currEntry = iterator.next();
             this.fillBeanInfo(currEntry.getValue());
         }
+        super.startInjection();
     }
 
     private void setDependenciesInfo(Bean bean, Class beanClass){
         Constructor[] constructors = beanClass.getConstructors();
         for(int i = 0; i < constructors.length; i++){
             if(constructors[i].isAnnotationPresent(Autowired.class)){
+                bean.setInjection(Injection.CONSTRUCTOR);
                 Class[] paramClasses = constructors[i].getParameterTypes();
                 Dependency newDependency;
                 for(int j = 0; j < paramClasses.length; j++){
@@ -98,6 +92,7 @@ public class AnnotationContainer extends AbstractContainer{
         Method[] methods = beanClass.getDeclaredMethods();
         for (int i = 0; i < methods.length; i++) {
             if(methods[i].isAnnotationPresent(Autowired.class) && methods[i].getParameterTypes().length == 1){
+
                 Class[] paramClasses = methods[i].getParameterTypes();
                 Dependency newDependency;
                 for(int j = 0; j < paramClasses.length; j++){
@@ -108,18 +103,5 @@ public class AnnotationContainer extends AbstractContainer{
                 }
             }
         }
-    }
-
-    @Override
-    protected void insertDependencies(Bean bean) {
-    }
-
-    @Override
-    protected Object createBean(Bean bean) {
-        return null;
-    }
-
-    @Override
-    protected void initializeBeans() {
     }
 }

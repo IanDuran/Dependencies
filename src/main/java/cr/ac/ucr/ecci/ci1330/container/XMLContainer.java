@@ -22,6 +22,10 @@ public class XMLContainer extends AbstractContainer {
         this.parser.parseFile(this.beansById,this.beansByType);
     }
 
+    public XMLContainer(){
+        super();
+    }
+
     /**
      * Gets a bean from an id.
      * @param id the bean's id.
@@ -64,14 +68,17 @@ public class XMLContainer extends AbstractContainer {
      * @return the injected bean.
      */
     @SuppressWarnings("unchecked")
-    public Object createBean(Bean bean) {
+    protected Object createBean(Bean bean) {
         Class currClass;
         Object instance = null;
-
         try {
             currClass = Class.forName(bean.getClassName());
             Constructor constructor = currClass.getConstructor();
             instance = constructor.newInstance();
+            if(!bean.getInitMethod().equals("")){
+                Method initMethod = currClass.getMethod(bean.getInitMethod());
+                initMethod.invoke(instance);
+            }
             this.insertDependencies(bean); //se envia el bean con la nueva instancia creada para que le inserte las dependencias.
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,7 +96,7 @@ public class XMLContainer extends AbstractContainer {
     }
 
     @Override
-    public void insertDependencies(Bean bean) {
+    protected void insertDependencies(Bean bean) {
         if(bean.getInjection().equals(Injection.SETTER)) {
             for (Dependency dependency : bean.getDependencies()) {
                 if (dependency.getAutowired().equals(Autowired.NAME)) {  //aca lo cambie, es autowired by name
@@ -103,10 +110,10 @@ public class XMLContainer extends AbstractContainer {
         }
     }
 
-    private void insertSetterDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency){
+    protected void insertSetterDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency){
         Bean newBean = beanMap.get(key);
         if (newBean != null) {
-            if (newBean.getScope().equals(Scope.SINGLETON)) {
+            if (newBean.getScope().equals(Scope.SINGLETON)){
                 //Con setters
                 this.setterInjection(bean, newBean, dependency);
             } else {
@@ -117,7 +124,7 @@ public class XMLContainer extends AbstractContainer {
     }
 
 
-    private void matchConstructorDependencies(Bean bean){
+    protected void matchConstructorDependencies(Bean bean){
         try {
             Class beanClass = Class.forName(bean.getClassName());
             List<Dependency> dependencies = bean.getDependencies();
@@ -142,10 +149,17 @@ public class XMLContainer extends AbstractContainer {
         }
     }
 
-    private void insertConstructorDependencies(Bean bean, Constructor constructor, Class[] classes){
+    protected void insertConstructorDependencies(Bean bean, Constructor constructor, Class[] classes){
         Object[] dependencies = new Object[classes.length];
+        String className = "";
         for (int i = 0; i < dependencies.length; i++) {
-            dependencies[i] = super.beansByType.get(classes[i].getName().split(" ")[2]).getInstance();
+            className = classes[i].getName();
+            Object instance = super.beansByType.get(className).getInstance();
+            if(instance != null) {
+                dependencies[i] = instance;
+            }else{
+                dependencies[i] = this.createBean(super.beansByType.get(className));
+            }
         }
         try {
             Object beanInstance = constructor.newInstance(dependencies);
@@ -157,7 +171,7 @@ public class XMLContainer extends AbstractContainer {
 
     }
 
-    private boolean areArgumentsCorrect(Class[] classes, List<Dependency> dependencies){
+    protected boolean areArgumentsCorrect(Class[] classes, List<Dependency> dependencies){
         boolean areCorrect = false;
         Set<Integer> foundArguments = new TreeSet<Integer>();
         int argumentNumber = 0;
@@ -176,12 +190,12 @@ public class XMLContainer extends AbstractContainer {
     }
 
 
-    private void setterInjection(Bean parent, Bean child, Dependency childDependency) {
+    protected void setterInjection(Bean parent, Bean child, Dependency childDependency) {
         this.setterInjection(parent, child.getInstance(), childDependency);
     }
 
 
-    private void setterInjection(Bean parent, Object instance, Dependency childDependency) {
+    protected void setterInjection(Bean parent, Object instance, Dependency childDependency) {
         try {
             Class beanClass = Class.forName(parent.getClassName());
             Method[] methods = beanClass.getDeclaredMethods();
@@ -202,11 +216,16 @@ public class XMLContainer extends AbstractContainer {
         Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
         while(iterator.hasNext()){
             Bean currBean = iterator.next().getValue();
-            if(currBean.getScope().equals(Scope.SINGLETON) && currBean.getInjection().equals(Injection.SETTER)){
+            if(currBean.getScope().equals(Scope.SINGLETON)
+                    && currBean.getInjection().equals(Injection.SETTER)){
                 try {
                     Class currClass = Class.forName(currBean.getClassName());
                     Constructor constructor = currClass.getConstructor();
                     Object instance = constructor.newInstance();
+                    if(!currBean.getInitMethod().equals("")){
+                        Method initMethod = currClass.getMethod(currBean.getInitMethod());
+                        initMethod.invoke(instance);
+                    }
                     currBean.setInstance(instance);
                 }catch (Exception e){
                     e.printStackTrace();

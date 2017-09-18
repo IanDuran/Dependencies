@@ -38,6 +38,4 @@ public abstract class AbstractParser {
      * @param bean the bean element from XML.
      */
     public abstract void createBean(Map<String, Bean> idBeanMap,Map<String,Bean> classBeanMap, Element bean);
-
-
 }
