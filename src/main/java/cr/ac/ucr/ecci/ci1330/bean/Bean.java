@@ -7,19 +7,29 @@ import cr.ac.ucr.ecci.ci1330.enums.Scope;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+    Universidad de Costa Rica
+     Facultad de ingeniería
+     Escuela de Ciencias de la Computación e Informática
+     Ingeniería de Software 1
+     Autores:
+     Brenes Solano Silvia B41133
+     Cubero Sánchez Josué B42190
+     Durán Gregory Ian B42322
+ */
+
 public class Bean {
     private String id;
     private String className;
     private String initMethod;
     private String destroyMethod;
     private Scope scope;
-    private Autowired autowired;
     private Injection injection;
     private Object instance;
     private List<Dependency> dependencies;
 
     public Bean(){
-        dependencies = new LinkedList<Dependency>();
+        this.dependencies = new LinkedList<Dependency>();
     }
 
     public String getId() {
@@ -44,14 +54,6 @@ public class Bean {
 
     public void setClassName(String className) {
         this.className = className;
-    }
-
-    public Autowired getAutowired() {
-        return this.autowired;
-    }
-
-    public void setAutowired(Autowired autowired) {
-        this.autowired = autowired;
     }
 
     public Object getInstance() {

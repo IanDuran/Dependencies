@@ -11,6 +11,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+/*
+    Universidad de Costa Rica
+     Facultad de ingeniería
+     Escuela de Ciencias de la Computación e Informática
+     Ingeniería de Software 1
+     Autores:
+     Brenes Solano Silvia B41133
+     Cubero Sánchez Josué B42190
+     Durán Gregory Ian B42322
+ */
+
 public class AnnotationParser extends AbstractParser {
 
     public AnnotationParser(String path){
@@ -28,6 +39,11 @@ public class AnnotationParser extends AbstractParser {
         }
     }
 
+    /**
+     * Fill the bean class map using the xom elements list tag.
+     * @param classBeanMap the bean class map.
+     * @param elements the xom elements list tag.
+     */
     private void fillClassMap(Map<String, Bean> classBeanMap, Elements elements){
         for (int i = 0; i < elements.size(); i++) {
             Element currElement = elements.get(i);

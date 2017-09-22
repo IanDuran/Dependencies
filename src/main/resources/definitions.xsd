@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Universidad de Costa Rica
+     Facultad de ingeniería
+     Escuela de Ciencias de la Computación e Informática
+     Ingeniería de Software 1
+     Autores:
+     Brenes Solano Silvia B41133
+     Cubero Sánchez Josué B42190
+     Durán Gregory Ian B42322-->
+
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="https://www.w3schools.com"
            xmlns="https://www.w3schools.com"
@@ -72,7 +82,6 @@
             <xs:attribute name="id" type="xs:string" use="required"/>
             <xs:attribute name="class" type="xs:string" use="required"/>
             <xs:attribute name="scope" type="xs:string"/>
-            <xs:attribute name="autowiring" type="xs:string"/>
             <xs:attribute name="injection" type="xs:string"/>
             <xs:attribute name="init-method" type="xs:string"/>
             <xs:attribute name="destroy-method" type="xs:string"/>

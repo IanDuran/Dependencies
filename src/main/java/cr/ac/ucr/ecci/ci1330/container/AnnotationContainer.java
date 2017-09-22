@@ -12,6 +12,17 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
+/*
+    Universidad de Costa Rica
+     Facultad de ingeniería
+     Escuela de Ciencias de la Computación e Informática
+     Ingeniería de Software 1
+     Autores:
+     Brenes Solano Silvia B41133
+     Cubero Sánchez Josué B42190
+     Durán Gregory Ian B42322
+ */
+
 public class AnnotationContainer extends XMLContainer{
 
     private AnnotationParser parser;
@@ -22,6 +33,20 @@ public class AnnotationContainer extends XMLContainer{
         this.parser.parseFile(super.beansById, super.beansByType);
     }
 
+    @Override
+    public void startInjection() {
+        Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String, Bean> currEntry = iterator.next();
+            this.fillBeanInfo(currEntry.getValue());
+        }
+        super.startInjection();
+    }
+
+    /**
+     * Fill bean attributes.
+     * @param bean the bean to be filled.
+     */
     private void fillBeanInfo(Bean bean){
         try {
             Class beanClass = Class.forName(bean.getClassName());
@@ -51,6 +76,13 @@ public class AnnotationContainer extends XMLContainer{
         }
     }
 
+    /**
+     * Set init or destroy method.
+     * @param bean the bean to be setted.
+     * @param beanClass the bean class.
+     * @param annotationClass the annotation class.
+     * @param isInitMethod a boolean to identify if its init or destroy method.
+     */
     private void setMethodName(Bean bean, Class beanClass, Class<? extends Annotation> annotationClass, boolean isInitMethod){
         Method[] classMethods = beanClass.getDeclaredMethods();
         for(int i = 0; i < classMethods.length; i++){
@@ -64,16 +96,11 @@ public class AnnotationContainer extends XMLContainer{
         }
     }
 
-    @Override
-    public void startInjection() {
-        Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
-        while(iterator.hasNext()){
-            Map.Entry<String, Bean> currEntry = iterator.next();
-            this.fillBeanInfo(currEntry.getValue());
-        }
-        super.startInjection();
-    }
-
+    /**
+     * Fill dependencies information.
+     * @param bean bean which contains the dependencies.
+     * @param beanClass the class of the bean.
+     */
     private void setDependenciesInfo(Bean bean, Class beanClass){
         Constructor[] constructors = beanClass.getConstructors();
         for(int i = 0; i < constructors.length; i++){
@@ -88,7 +115,6 @@ public class AnnotationContainer extends XMLContainer{
                 }
             }
         }
-
         Method[] methods = beanClass.getDeclaredMethods();
         for (int i = 0; i < methods.length; i++) {
             if(methods[i].isAnnotationPresent(Autowired.class) && methods[i].getParameterTypes().length == 1){
@@ -104,4 +130,5 @@ public class AnnotationContainer extends XMLContainer{
             }
         }
     }
+
 }

@@ -10,6 +10,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/*
+    Universidad de Costa Rica
+     Facultad de ingeniería
+     Escuela de Ciencias de la Computación e Informática
+     Ingeniería de Software 1
+     Autores:
+     Brenes Solano Silvia B41133
+     Cubero Sánchez Josué B42190
+     Durán Gregory Ian B42322
+ */
+
 public abstract class AbstractContainer implements Container{
 
     protected Map<String, Bean> beansById;
@@ -22,22 +33,79 @@ public abstract class AbstractContainer implements Container{
         this.beansByType = new HashMap<String, Bean>();
     }
 
+    /**
+     * Starts dependency injection.
+     */
     protected abstract void startInjection();
-    protected abstract void insertDependencies(Bean bean);
-    protected abstract Object createBean(Bean bean);
+
+    /**
+     * Initializes beans which are singletons and setter injection.
+     */
     protected abstract void initializeBeans();
-    public abstract Object getBeanById(String id);
-    public abstract Object getBeanByType(String className);
+
+    /**
+     * Starts dependency injection for a given bean.
+     * @param bean the bean whose dependencies will be injected.
+     */
+    protected abstract void insertDependencies(Bean bean);
+
+    /**
+     * Call an appropiate method to inject setter dependencies, depending on dependency scope and dependency existance.
+     * @param bean the bean to inject dependendies.
+     * @param beanMap the bean map.
+     * @param key the dependency id.
+     * @param dependency the dependency.
+     */
     protected abstract void insertSetterDependencies(Bean bean, Map<String, Bean> beanMap, String key, Dependency dependency);
+
+    /**
+     * Iterate through all bean constructors to get the correct one.
+     * @param bean the bean whom we iterate its constructors.
+     */
     protected abstract void matchConstructorDependencies(Bean bean);
-    protected abstract void insertConstructorDependencies(Bean bean, Constructor constructor, Class[] classes);
-    protected abstract boolean areArgumentsCorrect(Class[] classes, List<Dependency> dependencies);
+
+    /**
+     * Create a bean with all dependencies injected.
+     * @param bean the bean to be injected.
+     * @return the injected bean.
+     */
+    protected abstract Object createBean(Bean bean);
+
+    /**
+     * Inject the dependency looking for its setter method.
+     * @param parent the parent bean.
+     * @param child the child bean.
+     * @param childDependency the dependency.
+     */
     protected abstract void setterInjection(Bean parent, Bean child, Dependency childDependency);
+
+    /**
+     * Inject the dependency if it already exists.
+     * @param parent the parent bean.
+     * @param instance the instance of child bean.
+     * @param childDependency the dependency.
+     */
     protected abstract void setterInjection(Bean parent, Object instance, Dependency childDependency);
 
+    /**
+     * Check if constructor has correct the arguments for constructor injection.
+     * @param classes the argument types array.
+     * @param dependencies the dependencies array.
+     * @return true if its correct constructor, false otherwise.
+     */
+    protected abstract boolean areArgumentsCorrect(Class[] classes, List<Dependency> dependencies);
 
+    /**
+     * Insert constructor dependencies to bean.
+     * @param bean the bean which will be injected.
+     * @param constructor the correct constructor.
+     * @param classes the argument array for injections.
+     */
+    protected abstract void insertConstructorDependencies(Bean bean, Constructor constructor, Class[] classes);
 
-
+    /**
+     * Destroys all beans.
+     */
     public void destroy(){
         Iterator<Map.Entry<String, Bean>> iterator = beansByType.entrySet().iterator();
         while(iterator.hasNext()){
