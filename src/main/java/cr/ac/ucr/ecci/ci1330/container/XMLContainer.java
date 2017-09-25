@@ -77,13 +77,16 @@ public class XMLContainer extends AbstractContainer {
         Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
         while(iterator.hasNext()){
             Bean currBean = iterator.next().getValue();
+            if(currBean.getClassName().equals("cr.ac.ucr.ecci.ci1330.model.Classroom")){
+                System.out.println();
+            }
             if(currBean.getScope().equals(Scope.SINGLETON)
                     && currBean.getInjection().equals(Injection.SETTER)){
                 try {
                     Class currClass = Class.forName(currBean.getClassName());
                     Constructor constructor = currClass.getConstructor();
                     Object instance = constructor.newInstance();
-                    if(!currBean.getInitMethod().equals("")){
+                    if(currBean.getInitMethod() != null){
                         Method initMethod = currClass.getMethod(currBean.getInitMethod());
                         initMethod.invoke(instance);
                     }
@@ -179,12 +182,17 @@ public class XMLContainer extends AbstractContainer {
     protected void setterInjection(Bean parent, Object instance, Dependency childDependency) {
         try {
             Class beanClass = Class.forName(parent.getClassName());
-            Method[] methods = beanClass.getDeclaredMethods();
-            for (int i = 0; i < methods.length; i++) {
-                if (methods[i].getName().toLowerCase().contains(childDependency.getAttributeName().toLowerCase()) //Dice que el metodo es un set
-                        && methods[i].getParameterTypes().length == 1 //Revisa que solo tenga un parametro, por ser un setter
-                        && methods[i].getParameterTypes()[0].equals(Class.forName(childDependency.getDependencyClassName()))) {//Revisa que el parametro del setter sea del mismo tipo que la dependencia
-                    methods[i].invoke(parent.getInstance(), instance);
+            if(childDependency.getMethodName() != null){
+                Method setter = beanClass.getMethod(childDependency.getMethodName(), Class.forName(childDependency.getDependencyClassName()));
+                setter.invoke(parent.getInstance(), instance);
+            }else {
+                Method[] methods = beanClass.getDeclaredMethods();
+                for (int i = 0; i < methods.length; i++) {
+                    if (methods[i].getName().toLowerCase().contains(childDependency.getAttributeName().toLowerCase()) //Dice que el metodo es un set
+                            && methods[i].getParameterTypes().length == 1 //Revisa que solo tenga un parametro, por ser un setter
+                            && methods[i].getParameterTypes()[0].equals(Class.forName(childDependency.getDependencyClassName()))) {//Revisa que el parametro del setter sea del mismo tipo que la dependencia
+                        methods[i].invoke(parent.getInstance(), instance);
+                    }
                 }
             }
         } catch (Exception e) {

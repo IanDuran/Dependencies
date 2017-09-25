@@ -49,11 +49,9 @@ public class Teacher {
 
     @PostConstruct
     public void init(){
-
     }
 
     @PreDestroy
     public void destroy(){
-
     }
 }

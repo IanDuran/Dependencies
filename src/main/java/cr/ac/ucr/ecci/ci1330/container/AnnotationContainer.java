@@ -31,6 +31,7 @@ public class AnnotationContainer extends XMLContainer{
         super();
         this.parser = new AnnotationParser(path);
         this.parser.parseFile(super.beansById, super.beansByType);
+        this.startInjection();
     }
 
     @Override
@@ -50,6 +51,9 @@ public class AnnotationContainer extends XMLContainer{
     private void fillBeanInfo(Bean bean){
         try {
             Class beanClass = Class.forName(bean.getClassName());
+            if(beanClass.getName().equals("cr.ac.ucr.ecci.ci1330.model.Classroom")){
+                System.out.println();
+            }
             cr.ac.ucr.ecci.ci1330.enums.Scope scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.SINGLETON; //aca no puede hacer de una vez la vara de tipo enum?
             //Revisa si hay Id, si lo hay, lo pone en el bean y lo agrega al mapa en caso de que no exista
             if(beanClass.isAnnotationPresent(Id.class)){
@@ -118,11 +122,17 @@ public class AnnotationContainer extends XMLContainer{
         Method[] methods = beanClass.getDeclaredMethods();
         for (int i = 0; i < methods.length; i++) {
             if(methods[i].isAnnotationPresent(Autowired.class) && methods[i].getParameterTypes().length == 1){
-
+                Autowired autowired = methods[i].getAnnotation(Autowired.class);
                 Class[] paramClasses = methods[i].getParameterTypes();
                 Dependency newDependency;
                 for(int j = 0; j < paramClasses.length; j++){
                     newDependency = new Dependency();
+                    if(!autowired.id().equals("")){
+                        newDependency.setDependencyId(autowired.id());
+                        newDependency.setAutowired(cr.ac.ucr.ecci.ci1330.enums.Autowired.NAME);
+                    }else{
+                        newDependency.setAutowired(cr.ac.ucr.ecci.ci1330.enums.Autowired.TYPE);
+                    }
                     newDependency.setMethodName(methods[i].getName());
                     newDependency.setDependencyClassName(paramClasses[j].getName());
                     bean.addDependency(newDependency);

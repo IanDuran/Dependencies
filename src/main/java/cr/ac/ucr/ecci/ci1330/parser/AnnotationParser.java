@@ -71,18 +71,7 @@ public class AnnotationParser extends AbstractParser {
     }
 
     public static void main(String... args){
-        //AnnotationContainer annotationContainer = new AnnotationContainer("src\\main\\resources\\configuration.xml");
-        //annotationContainer.startInjection();
-        try{
-            Class testClass = Class.forName("cr.ac.ucr.ecci.ci1330.model.Teacher");
-            Constructor[] constructors = testClass.getConstructors();
-            Class[] classes = constructors[0].getParameterTypes();
-            for (int i = 0; i < classes.length; i++) {
-                System.out.println(classes[i].toString());
-            }
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        AnnotationContainer annotationContainer = new AnnotationContainer("src\\main\\resources\\configuration.xml");
+        System.out.println();
     }
 }
