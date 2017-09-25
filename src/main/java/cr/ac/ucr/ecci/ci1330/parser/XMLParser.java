@@ -125,37 +125,4 @@ public class XMLParser extends AbstractParser {
         newDependency.setAutowired(Autowired.valueOf(dependency.getAttributeValue("autowired")));
         return newDependency;
     }
-
-    /*public static void main(String[] args) {
-        XMLParser p = new XMLParser("src\\main\\resources\\configuration.xml");
-        Map<String,Bean> m = new HashMap<String, Bean>();
-        Map<String,Bean> m1 = new HashMap<String, Bean>();
-        p.parseFile(m,m1);
-        Iterator it = m.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Bean b = (Bean) pair.getValue();
-            System.out.println(pair.getKey());
-            System.out.println("\n"+pair.getKey()+ " " + b.getClassName()+ " " + b.getAutowired()+ " " + b.getInjection() + " " + b.getDestroyMethod()
-                    + " " + b.getInitMethod()+ " " + b.getScope()+ " ");
-            System.out.println("Dependencies:");
-            for(Dependency dep:b.getDependencies()){
-                System.out.println(dep.getAttributeName()+" "+dep.getAutowired()+" "+dep.getDependencyId());
-            }
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-        Iterator it2 = m1.entrySet().iterator();
-        while (it2.hasNext()) {
-            Map.Entry pair = (Map.Entry)it2.next();
-            Bean b1 = (Bean) pair.getValue();
-            System.out.println(pair.getKey());
-            System.out.println("\n"+pair.getKey()+ " " + b1.getClassName()+ " " + b1.getAutowired()+ " " + b1.getInjection() + " " + b1.getDestroyMethod()
-                    + " " + b1.getInitMethod()+ " " + b1.getScope()+ " ");
-            System.out.println("Dependencies:");
-            for(Dependency dep:b1.getDependencies()){
-                System.out.println(dep.getAttributeName()+" "+dep.getAutowired()+" "+dep.getDependencyId());
-            }
-            it2.remove(); // avoids a ConcurrentModificationException
-        }
-    }*/
 }
