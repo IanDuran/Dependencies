@@ -18,7 +18,7 @@ public class GraphAlgorithms {
         if(!graph.isEmpty()){
             Iterator<V> i = graph.iterator();
             Set<V> visited = new HashSet<V>();
-            while(i.hasNext())
+            while(i.hasNext() && !hasCycles)
                 hasCycles = dfsCycles(i.next(), null, graph, visited);
         }
         return !hasCycles;
