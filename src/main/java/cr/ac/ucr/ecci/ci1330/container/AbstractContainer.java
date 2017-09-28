@@ -2,6 +2,8 @@ package cr.ac.ucr.ecci.ci1330.container;
 
 import cr.ac.ucr.ecci.ci1330.bean.Bean;
 import cr.ac.ucr.ecci.ci1330.bean.Dependency;
+import cr.ac.ucr.ecci.ci1330.graph.AdjacencyList;
+import cr.ac.ucr.ecci.ci1330.graph.GraphAlgorithms;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -118,5 +120,25 @@ public abstract class AbstractContainer implements Container{
                 e.printStackTrace();
             }
         }
+    }
+
+    protected boolean hasCycles(){
+        AdjacencyList<Bean> graph = new AdjacencyList<Bean>(true, false);
+        Iterator<Map.Entry<String, Bean>> iterator = beansByType.entrySet().iterator();
+        while(iterator.hasNext()){
+            graph.addNode(iterator.next().getValue());
+        }
+
+        iterator = beansByType.entrySet().iterator();
+        while(iterator.hasNext()){
+            Bean currBean = iterator.next().getValue();
+            List<Dependency> dependencies = currBean.getDependencies();
+            for (int i = 0; i < dependencies.size(); i++) {
+                graph.addEdge(currBean, beansByType.get(dependencies.get(i).getDependencyClassName()));
+            }
+        }
+
+        boolean presentsCycles = !GraphAlgorithms.isGraphAcyclic(graph);
+        return presentsCycles;
     }
 }

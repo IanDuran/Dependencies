@@ -31,11 +31,16 @@ public class Teacher {
         }
     }
 
+    public Teacher(){
+
+    }
+
     public Assistant getAssistant() {
         return this.assistant;
     }
 
     public void setAssistant(Assistant assistant) {
+        System.out.println("Assistant");
         this.assistant = assistant;
     }
 
@@ -44,6 +49,7 @@ public class Teacher {
     }
 
     public void setStudent(Student student) {
+        System.out.println("Student");
         this.student = student;
     }
 

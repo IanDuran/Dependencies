@@ -20,8 +20,14 @@ import cr.ac.ucr.ecci.ci1330.annotation.Scope;
 @Scope
 public class Assistant {
 
+    private Teacher teacher;
+
     public Assistant(){
 
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @PostConstruct

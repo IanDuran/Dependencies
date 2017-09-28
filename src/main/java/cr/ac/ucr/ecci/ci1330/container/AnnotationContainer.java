@@ -28,7 +28,7 @@ public class AnnotationContainer extends XMLContainer{
     private AnnotationParser parser;
 
     public AnnotationContainer(String path){
-        super();
+        super(path);
         this.parser = new AnnotationParser(path);
         this.parser.parseFile(super.beansById, super.beansByType);
         this.startInjection();

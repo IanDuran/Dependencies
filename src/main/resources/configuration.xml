@@ -1,18 +1,19 @@
 <root xmlns="https://www.w3schools.com">
     <!-- los atributos los generé con la herramienta online que es un amor :3-->
     <annotation-config package="cr.ac.ucr.ecci.ci1330.model"/>
-    <!--<init-method method="live" />-->
-    <!--<destroy-method method="die" />-->
-    <!--<beans>
-        <bean id="1" class="cr.ac.ucr.ecci.ci1330.model.Teacher" scope="SINGLETON" injection="CONSTRUCTOR" init-method="init" destroy-method="des1">
+    <init-method method="live" />
+    <destroy-method method="die" />
+    <beans>
+        <bean id="1" class="cr.ac.ucr.ecci.ci1330.model.Teacher" scope="SINGLETON" injection="SETTER" init-method="init" destroy-method="des1">
             <dependencies>
                 <dependency attributeName="assistant" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Assistant" dependencyId="2" autowired="TYPE" />
                 <dependency attributeName="student" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="3" autowired="TYPE" />
             </dependencies>
         </bean>
         <bean id="2" class="cr.ac.ucr.ecci.ci1330.model.Assistant" scope="SINGLETON" injection="SETTER" init-method="init" destroy-method="des2">
+
         </bean>
         <bean id="3" class="cr.ac.ucr.ecci.ci1330.model.Student" scope="PROTOTYPE" injection="SETTER" init-method="init" destroy-method="des2">
         </bean>
-    </beans>-->
+    </beans>
 </root>

@@ -2,6 +2,7 @@ package cr.ac.ucr.ecci.ci1330.parser;
 
 import cr.ac.ucr.ecci.ci1330.bean.Bean;
 import cr.ac.ucr.ecci.ci1330.container.AnnotationContainer;
+import cr.ac.ucr.ecci.ci1330.container.XMLContainer;
 import cr.ac.ucr.ecci.ci1330.enums.Autowired;
 import nu.xom.Element;
 import nu.xom.Elements;
@@ -71,7 +72,8 @@ public class AnnotationParser extends AbstractParser {
     }
 
     public static void main(String... args){
-        AnnotationContainer annotationContainer = new AnnotationContainer("src\\main\\resources\\configuration.xml");
+        XMLContainer xmlContainer = new XMLContainer("src\\main\\resources\\configuration.xml");
+        xmlContainer.startInjection();
         System.out.println();
     }
 }

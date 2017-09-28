@@ -32,11 +32,6 @@ public class XMLContainer extends AbstractContainer {
         this.parser.parseFile(this.beansById,this.beansByType);
     }
 
-    public XMLContainer(){
-        super();
-    }
-
-
     public Object getBeanById(String id) {
         Bean bean = this.beansById.get(id);
         Object instance = null;
@@ -65,10 +60,14 @@ public class XMLContainer extends AbstractContainer {
 
     @Override
     public void startInjection(){
-        this.initializeBeans();
-        Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
-        while(iterator.hasNext()){
-            this.insertDependencies(iterator.next().getValue());
+        if(!super.hasCycles()) {
+            this.initializeBeans();
+            Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
+            while (iterator.hasNext()) {
+                this.insertDependencies(iterator.next().getValue());
+            }
+        }else{
+            System.out.println("Has Cycles");
         }
     }
 

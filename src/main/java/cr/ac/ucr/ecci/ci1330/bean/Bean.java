@@ -18,7 +18,7 @@ import java.util.List;
      Durán Gregory Ian B42322
  */
 
-public class Bean {
+public class Bean{
     private String id;
     private String className;
     private String initMethod;

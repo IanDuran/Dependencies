@@ -2,6 +2,7 @@ package cr.ac.ucr.ecci.ci1330.bean;
 
 import cr.ac.ucr.ecci.ci1330.enums.Autowired;
 
+
 /*
     Universidad de Costa Rica
      Facultad de ingeniería
@@ -13,7 +14,7 @@ import cr.ac.ucr.ecci.ci1330.enums.Autowired;
      Durán Gregory Ian B42322
  */
 
-public class Dependency {
+public class Dependency{
     private String attributeName;
     private String methodName;
     private String dependencyId;
