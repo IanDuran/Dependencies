@@ -11,6 +11,7 @@ public class VideoBeam {
 
     @Autowired
     public VideoBeam(){
+        System.out.println("VideoBeam done");
     }
 
 

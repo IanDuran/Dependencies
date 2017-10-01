@@ -164,9 +164,11 @@ public class XMLContainer extends AbstractContainer {
             currClass = Class.forName(bean.getClassName());
             Constructor constructor = currClass.getConstructor();
             instance = constructor.newInstance();
-            if(!bean.getInitMethod().equals("")){
-                Method initMethod = currClass.getMethod(bean.getInitMethod());
-                initMethod.invoke(instance);
+            if(bean.getInitMethod() != null) {
+                if (!bean.getInitMethod().equals("")) {
+                    Method initMethod = currClass.getMethod(bean.getInitMethod());
+                    initMethod.invoke(instance);
+                }
             }
             this.insertDependencies(bean); //se envia el bean con la nueva instancia creada para que le inserte las dependencias.
         } catch (Exception e) {

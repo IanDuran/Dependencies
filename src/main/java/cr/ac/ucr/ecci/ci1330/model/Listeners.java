@@ -6,20 +6,18 @@ import cr.ac.ucr.ecci.ci1330.annotation.Scope;
 @Scope
 public class Listeners {
     private Student alonso;
-    private Student pizza;
-    private Student milton;
-    private Student oscar;
-    private Student margarito;
-    private Student elbrayan;
 
     @Autowired
-    public Listeners(Student alonso, Student pizza, Student milton, Student oscar,
-                     Student margarito, Student elbrayan){
+    public Listeners(Student alonso){
         this.alonso = alonso;
-        this.pizza = pizza;
-        this.milton = milton;
-        this.oscar = oscar;
-        this.margarito = margarito;
-        this.elbrayan = elbrayan;
+        if(this.alonso != null){
+            System.out.println("Alonso de oyente");
+        } else {
+            System.out.println("Logro matricular alonso");
+        }
     }
+
+    /*public void setAlonso(Student alonso) {
+        this.alonso = alonso;
+    }*/
 }

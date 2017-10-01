@@ -1,9 +1,6 @@
 package cr.ac.ucr.ecci.ci1330.model;
 
-import cr.ac.ucr.ecci.ci1330.annotation.Id;
-import cr.ac.ucr.ecci.ci1330.annotation.PostConstruct;
-import cr.ac.ucr.ecci.ci1330.annotation.PreDestroy;
-import cr.ac.ucr.ecci.ci1330.annotation.Scope;
+import cr.ac.ucr.ecci.ci1330.annotation.*;
 
 /*
     Universidad de Costa Rica
@@ -21,12 +18,13 @@ import cr.ac.ucr.ecci.ci1330.annotation.Scope;
 public class Student {
 
 
+    @Autowired
     public Student(){
 
     }
 
 
-    @PostConstruct
+    /*@PostConstruct
     public void init(){
 
     }
@@ -34,5 +32,5 @@ public class Student {
     @PreDestroy
     public void destroy(){
 
-    }
+    }*/
 }

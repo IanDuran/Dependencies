@@ -1,7 +1,9 @@
 <root xmlns="https://www.w3schools.com">
     <annotation-config package="cr.ac.ucr.ecci.ci1330.model"/>
+    <!--<init-method method="init"/>
+    <destroy-method method="destroy"/>-->
     <beans>
-        <bean id="1" class="cr.ac.ucr.ecci.ci1330.model.Teacher" scope="SINGLETON" injection="SETTER" init-method="init" destroy-method="des1">
+        <!--<bean id="1" class="cr.ac.ucr.ecci.ci1330.model.Teacher" scope="SINGLETON" injection="SETTER" init-method="init" destroy-method="des1">
             <dependencies>
                 <dependency attributeName="assistant" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Assistant" dependencyId="2" autowired="TYPE" />
                 <dependency attributeName="student" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="3" autowired="TYPE" />
@@ -11,31 +13,25 @@
 
         </bean>
         <bean id="3" class="cr.ac.ucr.ecci.ci1330.model.Student" scope="PROTOTYPE" injection="SETTER" init-method="init" destroy-method="des2">
-        </bean>
+        </bean>-->
 
-        <bean id="11" class="cr.ac.ucr.ecci.ci1330.model.Auditory" scope="SINGLETON" injection="SETTER">
+        <bean id="11" class="cr.ac.ucr.ecci.ci1330.model.Auditory" scope="SINGLETON" injection="CONSTRUCTOR">
             <dependencies>
-                <dependency attributeName="s1" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Seat" dependencyId="2" autowired="NAME" />
-                <dependency attributeName="s2" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Seat" dependencyId="3" autowired="NAME" />
+                <dependency attributeName="s1" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Seat" dependencyId="4" autowired="NAME" />
             </dependencies>
         </bean>
 
         <bean id="12" class="cr.ac.ucr.ecci.ci1330.model.Listeners" scope="SINGLETON" injection="CONSTRUCTOR">
-            <dependencies>
-                <dependency attributeName="alonso" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="2" autowired="NAME" />
-                <dependency attributeName="pizza" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="3" autowired="NAME" />
-                <dependency attributeName="milton" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="2" autowired="NAME" />
-                <dependency attributeName="oscar" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="3" autowired="NAME" />
-                <dependency attributeName="margarito" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="2" autowired="NAME" />
-                <dependency attributeName="elbrayan" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="3" autowired="NAME" />
-            </dependencies>
+            <!--<dependencies>
+                <dependency attributeName="alonso" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="5" autowired="NAME" />
+            </dependencies>-->
         </bean>
 
         <bean id="13" class="cr.ac.ucr.ecci.ci1330.model.Computer" scope="PROTOTYPE" injection="CONSTRUCTOR">
             <dependencies>
-                <dependency attributeName="keyboard" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Keyboard" dependencyId="2" autowired="TYPE" />
-                <dependency attributeName="mouse" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Mouse" dependencyId="3" autowired="TYPE" />
-                <dependency attributeName="monitor" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Monitor" dependencyId="2" autowired="TYPE" />
+                <dependency attributeName="keyboard" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Keyboard" dependencyId="6" autowired="TYPE" />
+                <dependency attributeName="mouse" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Mouse" dependencyId="7" autowired="TYPE" />
+                <dependency attributeName="monitor" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Monitor" dependencyId="8" autowired="TYPE" />
             </dependencies>
         </bean>
 
@@ -51,7 +47,10 @@
         <bean id="17" class="cr.ac.ucr.ecci.ci1330.model.VideoBeam" scope="SINGLETON" injection="SETTER">
         </bean>
 
+        <bean id="18" class="cr.ac.ucr.ecci.ci1330.model.Student" scope="SINGLETON" injection="CONSTRUCTOR">
+        </bean>
 
-
+        <bean id="19" class="cr.ac.ucr.ecci.ci1330.model.Seat" scope="PROTOTYPE" injection="CONSTRUCTOR">
+        </bean>
     </beans>
 </root>

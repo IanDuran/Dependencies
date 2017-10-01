@@ -15,5 +15,10 @@ public class Computer {
         this.keyboard = keyboard;
         this.mouse = mouse;
         this.monitor = monitor;
+        if(this.keyboard != null && this.mouse != null && this.monitor != null){
+            System.out.println("Computer haves all of its components");
+        } else {
+            System.out.println("Computer dead");
+        }
     }
 }
