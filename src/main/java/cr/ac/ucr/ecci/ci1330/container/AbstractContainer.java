@@ -128,7 +128,7 @@ public abstract class AbstractContainer implements Container{
      * @return true if there are cycles in the beans graph, false otherwise.
      */
     protected boolean hasCycles(){
-        AdjacencyList<Bean> graph = new AdjacencyList<Bean>(false, false);
+        AdjacencyList<Bean> graph = new AdjacencyList<Bean>(true, false);
         Iterator<Map.Entry<String, Bean>> iterator = beansByType.entrySet().iterator();
         while(iterator.hasNext()){
             Bean currBean = iterator.next().getValue();
