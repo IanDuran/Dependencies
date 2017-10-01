@@ -1,7 +1,5 @@
 <root xmlns="https://www.w3schools.com">
     <annotation-config package="cr.ac.ucr.ecci.ci1330.model"/>
-    <init-method method="live" />
-    <destroy-method method="die" />
     <beans>
         <bean id="1" class="cr.ac.ucr.ecci.ci1330.model.Teacher" scope="SINGLETON" injection="SETTER" init-method="init" destroy-method="des1">
             <dependencies>
