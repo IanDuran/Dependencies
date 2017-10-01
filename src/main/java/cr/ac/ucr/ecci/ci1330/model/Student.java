@@ -16,11 +16,12 @@ import cr.ac.ucr.ecci.ci1330.annotation.*;
 @Id("student")
 @Scope
 public class Student {
+   // private Listeners lis;
 
 
     @Autowired
-    public Student(){
-
+    public Student(/*Listeners lis*/){
+        //this.lis = lis;
     }
 
 

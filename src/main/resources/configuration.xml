@@ -22,9 +22,9 @@
         </bean>
 
         <bean id="12" class="cr.ac.ucr.ecci.ci1330.model.Listeners" scope="SINGLETON" injection="CONSTRUCTOR">
-            <!--<dependencies>
+            <dependencies>
                 <dependency attributeName="alonso" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Student" dependencyId="5" autowired="NAME" />
-            </dependencies>-->
+            </dependencies>
         </bean>
 
         <bean id="13" class="cr.ac.ucr.ecci.ci1330.model.Computer" scope="PROTOTYPE" injection="CONSTRUCTOR">
@@ -48,6 +48,9 @@
         </bean>
 
         <bean id="18" class="cr.ac.ucr.ecci.ci1330.model.Student" scope="SINGLETON" injection="CONSTRUCTOR">
+           <!-- <dependencies>
+                <dependency attributeName="lis" dependencyClassName="cr.ac.ucr.ecci.ci1330.model.Listeners" dependencyId="9" autowired="NAME" />
+            </dependencies> -->
         </bean>
 
         <bean id="19" class="cr.ac.ucr.ecci.ci1330.model.Seat" scope="PROTOTYPE" injection="CONSTRUCTOR">

@@ -133,7 +133,7 @@ public abstract class AbstractContainer implements Container{
         while(iterator.hasNext()){
             Bean currBean = iterator.next().getValue();
             if(currBean.getDependencies().size() > 0)
-                graph.addNode(iterator.next().getValue());
+                graph.addNode(currBean);
         }
 
         iterator = beansByType.entrySet().iterator();
