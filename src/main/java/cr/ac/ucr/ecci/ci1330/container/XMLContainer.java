@@ -32,6 +32,10 @@ public class XMLContainer extends AbstractContainer {
         this.parser.parseFile(this.beansById,this.beansByType);
     }
 
+    public XMLContainer(){
+        super();
+    }
+
     public Object getBeanById(String id) {
         Bean bean = this.beansById.get(id);
         Object instance = null;

@@ -27,7 +27,7 @@ public class AnnotationContainer extends XMLContainer{
     private AnnotationParser parser;
 
     public AnnotationContainer(String path){
-        super(path);
+        super();
         this.parser = new AnnotationParser(path);
         this.parser.parseFile(super.beansById, super.beansByType);
         this.startInjection();
@@ -56,12 +56,16 @@ public class AnnotationContainer extends XMLContainer{
             cr.ac.ucr.ecci.ci1330.enums.Scope scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.SINGLETON;
             if(beanClass.isAnnotationPresent(Id.class)){
                 Id beanId = (Id) beanClass.getAnnotation(Id.class);
-                if(super.beansById.get(beanId.value()) == null) {
-                    bean.setId(beanId.value());
-                    super.beansById.put(beanId.value(), bean);
-                }else{
-                    throw new IllegalArgumentException();
+                String[] ids = beanId.value();
+                for (int i = 0; i < ids.length; i++) {
+                    if(super.beansById.get(ids[i]) == null) {
+                        bean.setId(ids[i]);
+                        super.beansById.put(ids[i], bean);
+                    }else{
+                        throw new IllegalArgumentException();
+                    }
                 }
+
             }
             //Lo mismo para el Scope
             if(beanClass.isAnnotationPresent(Scope.class)){
@@ -138,5 +142,4 @@ public class AnnotationContainer extends XMLContainer{
             }
         }
     }
-
 }

@@ -29,15 +29,4 @@ public class Assistant {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
-    @PostConstruct
-    public void init(){
-
-    }
-
-    @PreDestroy
-    public void destroy(){
-
-    }
-
 }
