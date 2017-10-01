@@ -40,7 +40,7 @@ public class Teacher {
     }
 
     public void setAssistant(Assistant assistant) {
-        System.out.println("Assistant");
+        System.out.println("Assistant is set in Teacher");
         this.assistant = assistant;
     }
 
@@ -49,7 +49,7 @@ public class Teacher {
     }
 
     public void setStudent(Student student) {
-        System.out.println("Student");
+        System.out.println("Student is set in Teacher");
         this.student = student;
     }
 

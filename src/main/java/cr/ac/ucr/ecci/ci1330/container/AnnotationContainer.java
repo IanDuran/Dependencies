@@ -30,7 +30,6 @@ public class AnnotationContainer extends XMLContainer{
         super();
         this.parser = new AnnotationParser(path);
         this.parser.parseFile(super.beansById, super.beansByType);
-        this.startInjection();
     }
 
     @Override
@@ -50,9 +49,6 @@ public class AnnotationContainer extends XMLContainer{
     private void fillBeanInfo(Bean bean){
         try {
             Class beanClass = Class.forName(bean.getClassName());
-            if(beanClass.getName().equals("cr.ac.ucr.ecci.ci1330.model.Classroom")){
-                System.out.println();
-            }
             cr.ac.ucr.ecci.ci1330.enums.Scope scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.SINGLETON;
             if(beanClass.isAnnotationPresent(Id.class)){
                 Id beanId = (Id) beanClass.getAnnotation(Id.class);

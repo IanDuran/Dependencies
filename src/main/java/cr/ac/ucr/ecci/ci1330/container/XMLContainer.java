@@ -80,9 +80,6 @@ public class XMLContainer extends AbstractContainer {
         Iterator<Map.Entry<String, Bean>> iterator = super.beansByType.entrySet().iterator();
         while(iterator.hasNext()){
             Bean currBean = iterator.next().getValue();
-            if(currBean.getClassName().equals("cr.ac.ucr.ecci.ci1330.model.Classroom")){
-                System.out.println();
-            }
             if(currBean.getScope().equals(Scope.SINGLETON)
                     && currBean.getInjection().equals(Injection.SETTER)){
                 try {
@@ -189,7 +186,9 @@ public class XMLContainer extends AbstractContainer {
             Class beanClass = Class.forName(parent.getClassName());
             if(childDependency.getMethodName() != null){
                 Method setter = beanClass.getMethod(childDependency.getMethodName(), Class.forName(childDependency.getDependencyClassName()));
-                setter.invoke(parent.getInstance(), instance);
+                if(parent.getInstance() != null)
+                    setter.invoke(parent.getInstance(), instance);
+
             }else {
                 Method[] methods = beanClass.getDeclaredMethods();
                 for (int i = 0; i < methods.length; i++) {

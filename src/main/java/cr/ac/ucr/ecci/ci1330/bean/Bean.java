@@ -101,6 +101,6 @@ public class Bean{
 
     @Override
     public boolean equals(Object obj) {
-        return this.id != null && this.className != null && this.id.equals(((Bean) obj).getId()) && this.className.equals(((Bean) obj).getClassName());
+        return obj != null && this.id != null && this.className != null && this.id.equals(((Bean) obj).getId()) && this.className.equals(((Bean) obj).getClassName());
     }
 }
