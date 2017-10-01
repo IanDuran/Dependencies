@@ -72,8 +72,11 @@ public class AnnotationParser extends AbstractParser {
     }
 
     public static void main(String... args){
-        XMLContainer xmlContainer = new XMLContainer("src\\main\\resources\\configuration.xml");
-        xmlContainer.startInjection();
+        /*XMLContainer xmlContainer = new XMLContainer("src\\main\\resources\\configuration.xml");
+        xmlContainer.startInjection();*/
+
+        AnnotationContainer annotationContainer = new AnnotationContainer("src\\main\\resources\\configuration.xml");
+        annotationContainer.startInjection();
         System.out.println();
     }
 }

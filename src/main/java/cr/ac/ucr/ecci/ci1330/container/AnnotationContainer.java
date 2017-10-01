@@ -61,8 +61,6 @@ public class AnnotationContainer extends XMLContainer{
                     if(super.beansById.get(ids[i]) == null) {
                         bean.setId(ids[i]);
                         super.beansById.put(ids[i], bean);
-                    }else{
-                        throw new IllegalArgumentException();
                     }
                 }
 

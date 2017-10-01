@@ -98,4 +98,9 @@ public class Bean{
     public void setInjection(Injection injection) {
         this.injection = injection;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.id != null && this.className != null && this.id.equals(((Bean) obj).getId()) && this.className.equals(((Bean) obj).getClassName());
+    }
 }
