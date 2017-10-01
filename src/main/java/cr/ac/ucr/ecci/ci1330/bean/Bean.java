@@ -1,23 +1,22 @@
 package cr.ac.ucr.ecci.ci1330.bean;
 
-import cr.ac.ucr.ecci.ci1330.enums.Autowired;
 import cr.ac.ucr.ecci.ci1330.enums.Injection;
 import cr.ac.ucr.ecci.ci1330.enums.Scope;
 
 import java.util.LinkedList;
 import java.util.List;
 
-/*
-    Universidad de Costa Rica
-     Facultad de ingeniería
-     Escuela de Ciencias de la Computación e Informática
-     Ingeniería de Software 1
-     Autores:
-     Brenes Solano Silvia B41133
-     Cubero Sánchez Josué B42190
-     Durán Gregory Ian B42322
+/**
+ * Universidad de Costa Rica
+ * Facultad de ingeniería
+ * Escuela de Ciencias de la Computación e Informática
+ * Ingeniería de Software 1
+ * Autores:
+ *
+ * @author Brenes Solano Silvia B41133
+ * @author Cubero Sánchez Josué B42190
+ * @author Durán Gregory Ian B42322
  */
-
 public class Bean{
     private String id;
     private String className;

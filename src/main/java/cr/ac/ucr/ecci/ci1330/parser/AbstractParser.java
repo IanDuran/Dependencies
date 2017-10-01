@@ -10,17 +10,17 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Map;
 
-/*
-    Universidad de Costa Rica
-     Facultad de ingeniería
-     Escuela de Ciencias de la Computación e Informática
-     Ingeniería de Software 1
-     Autores:
-     Brenes Solano Silvia B41133
-     Cubero Sánchez Josué B42190
-     Durán Gregory Ian B42322
+/**
+ * Universidad de Costa Rica
+ * Facultad de ingeniería
+ * Escuela de Ciencias de la Computación e Informática
+ * Ingeniería de Software 1
+ * Autores:
+ *
+ * @author Brenes Solano Silvia B41133
+ * @author Cubero Sánchez Josué B42190
+ * @author Durán Gregory Ian B42322
  */
-
 public abstract class AbstractParser {
     protected Document configurationFile;
 

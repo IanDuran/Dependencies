@@ -11,18 +11,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
-
-/*
-    Universidad de Costa Rica
-     Facultad de ingeniería
-     Escuela de Ciencias de la Computación e Informática
-     Ingeniería de Software 1
-     Autores:
-     Brenes Solano Silvia B41133
-     Cubero Sánchez Josué B42190
-     Durán Gregory Ian B42322
+/**
+ * Universidad de Costa Rica
+ * Facultad de ingeniería
+ * Escuela de Ciencias de la Computación e Informática
+ * Ingeniería de Software 1
+ * Autores:
+ *
+ * @author Brenes Solano Silvia B41133
+ * @author Cubero Sánchez Josué B42190
+ * @author Durán Gregory Ian B42322
  */
-
 public class AnnotationContainer extends XMLContainer{
 
     private AnnotationParser parser;
@@ -45,7 +44,7 @@ public class AnnotationContainer extends XMLContainer{
     }
 
     /**
-     * Fill bean attributes.
+     * Fill bean's information taken from the annotations.
      * @param bean the bean to be filled.
      */
     private void fillBeanInfo(Bean bean){
@@ -54,8 +53,7 @@ public class AnnotationContainer extends XMLContainer{
             if(beanClass.getName().equals("cr.ac.ucr.ecci.ci1330.model.Classroom")){
                 System.out.println();
             }
-            cr.ac.ucr.ecci.ci1330.enums.Scope scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.SINGLETON; //aca no puede hacer de una vez la vara de tipo enum?
-            //Revisa si hay Id, si lo hay, lo pone en el bean y lo agrega al mapa en caso de que no exista
+            cr.ac.ucr.ecci.ci1330.enums.Scope scopeValue = cr.ac.ucr.ecci.ci1330.enums.Scope.SINGLETON;
             if(beanClass.isAnnotationPresent(Id.class)){
                 Id beanId = (Id) beanClass.getAnnotation(Id.class);
                 if(super.beansById.get(beanId.value()) == null) {
@@ -101,7 +99,7 @@ public class AnnotationContainer extends XMLContainer{
     }
 
     /**
-     * Fill dependencies information.
+     * Fills the given bean's dependencies' information.
      * @param bean bean which contains the dependencies.
      * @param beanClass the class of the bean.
      */

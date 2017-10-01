@@ -11,17 +11,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.*;
 
-/*
-    Universidad de Costa Rica
-     Facultad de ingeniería
-     Escuela de Ciencias de la Computación e Informática
-     Ingeniería de Software 1
-     Autores:
-     Brenes Solano Silvia B41133
-     Cubero Sánchez Josué B42190
-     Durán Gregory Ian B42322
+/**
+ * Universidad de Costa Rica
+ * Facultad de ingeniería
+ * Escuela de Ciencias de la Computación e Informática
+ * Ingeniería de Software 1
+ * Autores:
+ *
+ * @author Brenes Solano Silvia B41133
+ * @author Cubero Sánchez Josué B42190
+ * @author Durán Gregory Ian B42322
  */
-
 public class XMLContainer extends AbstractContainer {
 
     private XMLParser parser;
@@ -237,7 +237,6 @@ public class XMLContainer extends AbstractContainer {
         }catch (Exception e){
             e.printStackTrace();
         }
-        //Object instance = constructor.newInstance();
     }
 
 }

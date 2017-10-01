@@ -12,15 +12,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/*
-    Universidad de Costa Rica
-     Facultad de ingeniería
-     Escuela de Ciencias de la Computación e Informática
-     Ingeniería de Software 1
-     Autores:
-     Brenes Solano Silvia B41133
-     Cubero Sánchez Josué B42190
-     Durán Gregory Ian B42322
+/**
+ * Universidad de Costa Rica
+ * Facultad de ingeniería
+ * Escuela de Ciencias de la Computación e Informática
+ * Ingeniería de Software 1
+ * Autores:
+ *
+ * @author Brenes Solano Silvia B41133
+ * @author Cubero Sánchez Josué B42190
+ * @author Durán Gregory Ian B42322
  */
 
 public abstract class AbstractContainer implements Container{
@@ -106,7 +107,7 @@ public abstract class AbstractContainer implements Container{
     protected abstract void insertConstructorDependencies(Bean bean, Constructor constructor, Class[] classes);
 
     /**
-     * Destroys all beans.
+     * Calls the destroy methods in all beans.
      */
     public void destroy(){
         Iterator<Map.Entry<String, Bean>> iterator = beansByType.entrySet().iterator();
@@ -122,6 +123,10 @@ public abstract class AbstractContainer implements Container{
         }
     }
 
+    /**
+     * Checks the dependencies for cycles that will
+     * @return true if there are cycles in the beans graph, false otherwise.
+     */
     protected boolean hasCycles(){
         AdjacencyList<Bean> graph = new AdjacencyList<Bean>(true, false);
         Iterator<Map.Entry<String, Bean>> iterator = beansByType.entrySet().iterator();
@@ -137,8 +142,6 @@ public abstract class AbstractContainer implements Container{
                 graph.addEdge(currBean, beansByType.get(dependencies.get(i).getDependencyClassName()));
             }
         }
-
-        boolean presentsCycles = !GraphAlgorithms.isGraphAcyclic(graph);
-        return presentsCycles;
+        return !GraphAlgorithms.isGraphAcyclic(graph);
     }
 }
