@@ -7,7 +7,7 @@ public class Classroom {
     private Whiteboard whiteboard;
     private Teacher teacher;
     private Assistant assistant;
-
+    private Desk desk;
 
     @Autowired
     public void setWhiteboard(Whiteboard whiteboard) {
@@ -22,5 +22,10 @@ public class Classroom {
     @Autowired
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    @Autowired
+    public void setDesk(Desk desk) {
+        this.desk = desk;
     }
 }

@@ -6,10 +6,4 @@ import cr.ac.ucr.ecci.ci1330.annotation.Scope;
 @Scope("PROTOTYPE")
 public class Monitor {
 
-
-    @Autowired
-    public Monitor(){
-    }
-
-
 }

@@ -131,7 +131,9 @@ public abstract class AbstractContainer implements Container{
         AdjacencyList<Bean> graph = new AdjacencyList<Bean>(true, false);
         Iterator<Map.Entry<String, Bean>> iterator = beansByType.entrySet().iterator();
         while(iterator.hasNext()){
-            graph.addNode(iterator.next().getValue());
+            Bean currBean = iterator.next().getValue();
+            if(currBean.getDependencies().size() > 0)
+                graph.addNode(iterator.next().getValue());
         }
 
         iterator = beansByType.entrySet().iterator();
@@ -139,7 +141,9 @@ public abstract class AbstractContainer implements Container{
             Bean currBean = iterator.next().getValue();
             List<Dependency> dependencies = currBean.getDependencies();
             for (int i = 0; i < dependencies.size(); i++) {
-                graph.addEdge(currBean, beansByType.get(dependencies.get(i).getDependencyClassName()));
+                Bean dependencyBean = beansByType.get(dependencies.get(i).getDependencyClassName());
+                if(dependencyBean.getDependencies().size() > 0)
+                    graph.addEdge(currBean, dependencyBean);
             }
         }
         return !GraphAlgorithms.isGraphAcyclic(graph);
